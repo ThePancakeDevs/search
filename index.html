@@ -1,35 +1,96 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/favicons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="Pancake Search">
-    <meta name="application-name" content="Pancake Search">
-    <meta name="msapplication-TileColor" content="#603cba">
-    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
-    <script src="https://api.pancake.ca/v2/inject.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.pancake.ca/windows-ui-fabric@pancake/app-config.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/windows-ui.min.css" rel="stylesheet">
-    <link href="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/winui-icons.min.css" rel="stylesheet">
-    <link href="https://www.pancake.ca/css/navpagecontainer.css" rel="stylesheet">
-    <title>Pancake Search</title>
-    <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/favicons/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="Pancake Search">
+  <meta name="application-name" content="Pancake Search">
+  <meta name="msapplication-TileColor" content="#603cba">
+  <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <script src="https://api.pancake.ca/v2/inject.js"></script>
+  <meta charset="UTF-8">
+  <meta property="hnet:title" content="Pancake Search" />
+  <meta property="hnet:description" content="Find the websitesssssss" />
+  <link href="https://cdn.pancake.ca/GoogleFonts@latest/lato.css" rel="stylesheet">
+  <link href="https://cdn.pancake.ca/GoogleFonts@latest/sourcecodepro.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pancake Addons</title>
+  <link href="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/app-config.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/windows-ui.min.css" rel="stylesheet">
+  <link href="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/winui-icons.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5a1f3b295c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <pancakeapp>
+      <div class="container-flex-row">
+        <link href="https://www.pancake.ca/css/navpagecontainer.css" rel="stylesheet">
+      <aside class="app-navbar-wrap collapsed" id="NavBarMain">
+          <div class="app-navbar-header-mobile">
+            <span class="app-navbar-toggler" data-win-toggle="navbar-left" data-win-target="#NavBarMain"></span>
+            <div>
+              <span class="app-navbar-name">Pancake Search</span>
+            </div>
+          </div>
+          <nav class="app-navbar">
+            <div class="app-navbar-header">
+              <span class="app-navbar-toggler" data-win-toggle="navbar-left" data-win-target="#NavBarMain" aria-controls="NavBarMain" aria-label="Toggle navigation"></span>
+              <span class="app-navbar-name">Pancake Search</span>
+            </div>
+            <ul class="app-navbar-list">
+              <li class="app-navbar-list-item">
+                <a href="https://www.pancake.ca/">
+                  <i class="icons10-home"></i>
+                  <span>Home</span>
+                </a>
+              </li>
+              <!-- .... -->
+              <li class="app-navbar-list-item">
+                <a href="https://search.pancake.ca/" class="active">
+                  <i class="icons10-search"></i>
+                  <span>Search</span>
+                </a>
+              </li>
+              <!-- .... -->
+              <li class="app-navbar-list-item">
+                  <a href="https://api.pancake.ca/">
+                    <i class="icons10-code-file"></i>
+                    <span>API</span>
+                  </a>
+                </li>
+              <!-- .... -->
+              <li class="app-navbar-list-item">
+                  <a href="https://www.pancake.ca/docs/">
+                    <i class="icons10-document"></i>
+                    <span>Documentation</span>
+                  </a>
+                </li>
+              <!-- .... -->
+              <li class="app-navbar-list-item">
+                <a href="https://www.pancake.ca/devs/">
+                  <i class="icons10-user-group"></i>
+                  <span>The Devs</span>
+                </a>
+              </li>
+              <li class="app-navbar-list-item">
+                <a href="https://addons.pancake.ca/">
+                  <i class="fa-solid fa-puzzle-piece"></i>
+                  <span>Addons</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
 
-    <header>
-        <h1>Pancake Search</h1>
-    </header>
+        <main class="app-page-container has-padding">
 
-    <main>
-        <div class="app-alert-bar alert-bar-secondary" style="margin-bottom: 15px;" role="alert">
+          <h2>Pancake Search</h2>
+
+          <div class="app-alert-bar alert-bar-secondary" style="margin-bottom: 15px;" role="alert">
             <i class="icons10-exclamation-mark app-color-primary"></i>
             <strong class="app-color-primary">Info:</strong><span>This tool is in public beta.</span>
             <div class="app-alert-bar-end-content">
@@ -41,6 +102,14 @@
             <button id="loadFolderButton" class="app-btn app-btn-outline-primary">
                 <i class="icons10-opened-folder"></i>
                 <span>Select overrides folder</span>
+            </button>
+            <button id="loadFolderButton" class="app-btn app-btn-subtle tooltip">
+              <i class="icons10-document"></i>
+              <span class="tooltiptext">Use our mirror</span>
+            </button>
+            <button onclick="window.location.href = 'https://github.com/pancakedevs/search';" class="app-btn app-btn-subtle tooltip">
+              <i class="fa-brands fa-github"></i>
+              <span class="tooltiptext">Source code</span>
             </button>
         </div>
         <div class="app-progress-container" style="height: 5px;" id="progress">
@@ -54,10 +123,23 @@
                 <button type="submit"></button>
             </div>
         </div>
+        <div id="searchFilters" style="display: none;" class="app-select-menu">
+          <span class="app-dropdown-title" data-win-toggle="dropdown" data-win-target="#MySelectMenu">Sites</span>
+          <ul class="app-dropdown-list" id="MySelectMenu">
+            <li class="app-dropdown-list-item selected"><span>Sites</span></li>
+            <li class="app-dropdown-list-item"><span>Dots</span></li>
+            <li class="app-dropdown-list-item"><span>Files</span></li>
+            <li class="app-dropdown-list-item"><span>Users</span></li>
+          </ul>
+        </div>
         <div id="results"></div>
 
-    </main>
+        </main>
+
+      </div>
+    </pancakeapp>
     <script src="https://cdn.pancake.ca/windows-ui-fabric@4.0.2/windows-ui.min.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb@8/build/umd.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
