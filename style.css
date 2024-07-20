@@ -1,0 +1,157 @@
+:root {
+    --PrimaryColor: #935e3c !important;
+    --PrimaryColorLight: #e6b17d !important;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+header {
+    background-color: #111;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1px;
+    color: #fff;
+    padding-left: 20px;
+    border-bottom: 2px solid #000;
+}
+
+main {
+    padding: 20px;
+    margin-top: 24px;
+}
+
+#results {
+    margin-top: 20px;
+}
+.result {
+    border-radius: 12px;
+    display: table;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.result-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--PrimaryColor);
+    text-decoration: none;
+}
+
+.result-item {
+    display: flexbox;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.result-favicon {
+    padding: 1px;
+    background-color: #f1f1f1;
+    border: 1px solid #bebebe;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    margin-right: 2px;
+}
+
+.result-title:hover {
+    text-decoration: underline;
+}
+
+.result-url {
+    font-size: 14px;
+    color: #006621;
+}
+.result-description {
+    font-size: 15px;
+    color: #545454;
+}
+a {
+    color: blue;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#progress {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+#progressBar {
+    height: 100%;
+    width: 0;
+    background-color: #4caf50;
+    transition: width 0.3s;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.result:hover {
+    a {
+        text-decoration: underline;
+    }
+}
+
+.result-item.ad {
+    border: 2px solid #d1d1d1;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.ad-label {
+    color: #001aff;
+    padding: 2px;
+    border: 1px solid #001aff;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    z-index: 1000;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    top: -150%;
+    left: 50%;
+    margin-left: -60px;
+    background-color: rgb(58, 58, 58);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    margin-top: 12px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    z-index: 1000;
+}
+
+.app-dropdown-list {
+    margin-left: -80px;
+}

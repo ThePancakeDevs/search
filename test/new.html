@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pancake Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .result {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .result-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a0dab;
+            text-decoration: none;
+        }
+        .result-title:hover {
+            text-decoration: underline;
+        }
+        .result-url {
+            font-size: 14px;
+            color: #006621;
+        }
+        .result-description {
+            font-size: 13px;
+            color: #545454;
+        }
+        #progress {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        #progressBar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            transition: width 0.3s;
+            border-radius: 5px 0 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pancake Search</h1>
+    <button id="loadFolderButton">Load Folder</button>
+    <div id="progress">
+        <div id="progressBar">0%</div>
+    </div>
+    <input type="text" id="searchBar" placeholder="Search..." style="display:none; margin-top: 20px;" oninput="searchFiles()"/>
+    <div id="results"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/idb@8/build/umd.js"></script>
+    <script>
+        let fileHandles = [];
+        let scannedFiles = false;
+
+        // Initialize IndexedDB
+        const dbPromise = idb.openDB('pancakeSearchDB', 1, {
+            upgrade(db) {
+                db.createObjectStore('files', { keyPath: 'url' });
+            },
+        });
+
+        document.getElementById('loadFolderButton').addEventListener('click', async () => {
+            fileHandles = [];
+            scannedFiles = false;
+            document.getElementById('progress').style.display = 'block';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressBar').textContent = '0%';
+
+            const directoryHandle = await window.showDirectoryPicker();
+            await loadFiles(directoryHandle, '');
+            await saveDataToIndexedDB();
+
+            document.getElementById('searchBar').style.display = 'block';
+            scannedFiles = true;
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressBar').textContent = '100%';
+            setTimeout(() => {
+                document.getElementById('progress').style.display = 'none';
+            }, 500);
+        });
+
+        async function loadFiles(directoryHandle, path) {
+            let fileCount = 0;
+
+            for await (const entry of directoryHandle.values()) {
+                fileCount++;
+            }
+
+            let processedFiles = 0;
+
+            for await (const entry of directoryHandle.values()) {
+                if (entry.kind === 'file' && entry.name.endsWith('.html')) {
+                    const fullPath = `${path}/${entry.name}`;
+                    const normalizedPath = fullPath.replace(/\/$/, ''); // Remove trailing slashes
+                    const fileData = await processFile(entry, normalizedPath);
+                    if (fileData) {
+                        fileHandles.push(fileData);
+                    }
+                } else if (entry.kind === 'directory') {
+                    await loadFiles(entry, `${path}/${entry.name}`);
+                }
+                processedFiles++;
+                const progress = (processedFiles / fileCount) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+                document.getElementById('progressBar').textContent = `${Math.round(progress)}%`;
+            }
+        }
+
+async function processFile(fileHandle, path) {
+    const file = await fileHandle.getFile();
+    const content = await file.text();
+    const titleMatch = content.match(/<meta property="hnet:title" content="([^"]+)" \/>/);
+    const descriptionMatch = content.match(/<meta property="hnet:description" content="([^"]+)" \/>/);
+
+    if (titleMatch && descriptionMatch) {
+        const title = titleMatch[1].trim();
+        const description = descriptionMatch[1].trim();
+        const urlPath = `${path}`.replace(/^\//, ''); // Remove leading slash
+        const httpsUrl = `https://${urlPath}`;
+        const hnetUrl = `hnet://${urlPath}`;
+
+        return {
+            title: title,
+            url: hnetUrl,
+            httpsUrl: httpsUrl,
+            description: description
+        };
+    }
+    return null;
+}
+
+        async function saveDataToIndexedDB() {
+            const db = await dbPromise;
+            const tx = db.transaction('files', 'readwrite');
+            const store = tx.objectStore('files');
+            for (const item of fileHandles) {
+                await store.put(item);
+            }
+            await tx.done;
+        }
+
+        async function loadDataFromIndexedDB() {
+            const db = await dbPromise;
+            const tx = db.transaction('files', 'readonly');
+            const store = tx.objectStore('files');
+            const allData = await store.getAll();
+            return allData;
+        }
+
+        async function searchFiles() {
+    const searchTerm = document.getElementById('searchBar').value.toLowerCase().trim();
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = '';
+
+    if (!scannedFiles || searchTerm === '') {
+        return;
+    }
+
+    const data = await loadDataFromIndexedDB();
+    const seenResults = new Set();
+
+    for (const item of data) {
+        const title = item.title;
+        const description = item.description;
+        const hnetUrl = item.url;
+
+        // Only include results matching the search term
+        if (title.toLowerCase().includes(searchTerm) || description.toLowerCase().includes(searchTerm)) {
+            const uniqueKey = `${title}-${hnetUrl}`;
+
+            if (!seenResults.has(uniqueKey)) {
+                const resultDiv = document.createElement('div');
+                resultDiv.classList.add('result');
+                resultDiv.innerHTML = `
+                    <a href="${item.httpsUrl}" class="result-title" target="_blank">${title}</a><br>
+                    <span class="result-url">${hnetUrl}</span><br>
+                    <span class="result-description">${description}</span>
+                `;
+                resultsContainer.appendChild(resultDiv);
+                seenResults.add(uniqueKey);
+            }
+        }
+    }
+}
+    </script>
+</body>
+</html>
